@@ -69,8 +69,20 @@ degagerPopups();</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
 
-    <div class="box"><h2>4. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>5. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box">
+      <h2>1. Mode Anti-AFK</h2>
+      <p class="content">setInterval(() => {
+    window.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
+    console.log("Anti-AFK actif");
+}, 30000);</p>
+      <button onclick="copyText(this)">Copier</button>
+    </div>
+    <div class="box">
+      <h2>2. Récupérateur Cookies</h2>
+      <p class="content">console.log("--- COOKIES ---");
+document.cookie.split(';').forEach(c => console.log(c.trim()));</p>
+      <button onclick="copyText(this)">Copier</button>
+    </div>
     <div class="box"><h2>6. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
     <div class="box"><h2>7. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
   </div>
