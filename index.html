@@ -54,13 +54,38 @@
   <div class="container">
 
     <div class="box">
-      <h2>Titre 1</h2>
-      <p class="content">Voici du texte dans la première fenêtre.</p>
+      <h2>auto-Clicker</h2>
+      <p class="content">let autoClicker = null;
+
+// Appuyez sur la touche 'F4' pour démarrer/arrêter
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'F4') {
+        if (autoClicker) {
+            clearInterval(autoClicker);
+            autoClicker = null;
+            console.log("STOP");
+        } else {
+            console.log("START");
+            // On capture la position de la souris au moment du démarrage
+            let x = 0, y = 0;
+            document.addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; }, {once: true});
+
+            autoClicker = setInterval(() => {
+                const el = document.elementFromPoint(x, y);
+                if (el) {
+                    el.dispatchEvent(new MouseEvent('mousedown', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
+                    el.dispatchEvent(new MouseEvent('mouseup', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
+                    el.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
+                }
+            }, 1); // 1 est le minimum mais c'est le délai entre chaque click
+        }
+    }
+});</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
 
     <div class="box">
-      <h2>Titre 2</h2>
+      <h2>Crack Mdp</h2>
       <p class="content">Voici du texte dans la deuxième fenêtre.</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
