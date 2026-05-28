@@ -29,9 +29,13 @@
       position: relative;
     }
 
-    h2 {
-      margin-top: 0;
+    /* MODIFICATION : Ajout du style pour conserver les sauts de ligne */
+    .content {
+      white-space: pre-wrap;
+      word-break: break-all;
     }
+
+    h2 { margin-top: 0; }
 
     button {
       margin-top: 10px;
@@ -42,17 +46,12 @@
       color: white;
       cursor: pointer;
     }
-
-    button:hover {
-      background-color: #555;
-    }
+    button:hover { background-color: #555; }
   </style>
 </head>
 
 <body>
-
   <div class="container">
-
     <div class="box">
       <h2>auto-Clicker</h2>
       <p class="content">let autoClicker = null;
@@ -66,7 +65,7 @@ document.addEventListener('keydown', (e) => {
             console.log("STOP");
         } else {
             console.log("START");
-            // On capture la position de la souris au moment du démarrage
+            // On capture la position de la souris
             let x = 0, y = 0;
             document.addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; }, {once: true});
 
@@ -77,7 +76,7 @@ document.addEventListener('keydown', (e) => {
                     el.dispatchEvent(new MouseEvent('mouseup', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
                     el.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
                 }
-            }, 1); // 1 est le minimum mais c'est le délai entre chaque click
+            }, 1);
         }
     }
 });</p>
@@ -103,79 +102,34 @@ document.addEventListener('keydown', (e) => {
 
     document.addEventListener('keydown', (e) => { if(e.key === 'Escape') estEnMarche = false; });
 
-    console.log("Démarrage ultra-rapide pour une longueur de : " + tailleUnique);
-    
     let compteurs = new Array(tailleUnique).fill(0);
     
-    // Boucle synchrone sans aucune pause
     while (estEnMarche) {
         let testMDP = compteurs.map(i => cla[i]).join('');
-        
         inputField.value = testMDP;
         submitBtn.click();
 
-        // Incrémentation
         let i = 0;
         while (i < tailleUnique && ++compteurs[i] >= cla.length) {
             compteurs[i] = 0;
             i++;
         }
-        
-        // Arrêt si toutes les combinaisons sont faites
-        if (i === tailleUnique) {
-            console.log("Terminé.");
-            break; 
-        }
+        if (i === tailleUnique) break; 
     }
 })();</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
-
-    <div class="box">
-      <h2>Titre 3</h2>
-      <p class="content">Encore du contenu ici.</p>
-      <button onclick="copyText(this)">Copier</button>
     </div>
-
-    <div class="box">
-      <h2>Titre 3</h2>
-      <p class="content">Encore du contenu ici.</p>
-      <button onclick="copyText(this)">Copier</button>
-    </div>
-
-    <div class="box">
-      <h2>Titre 3</h2>
-      <p class="content">Encore du contenu ici.</p>
-      <button onclick="copyText(this)">Copier</button>
-    </div>
-
-    <div class="box">
-      <h2>Titre 3</h2>
-      <p class="content">Encore du contenu ici.</p>
-      <button onclick="copyText(this)">Copier</button>
-    </div>
-
-    <div class="box">
-      <h2>Titre 3</h2>
-      <p class="content">Encore du contenu ici.</p>
-      <button onclick="copyText(this)">Copier</button>
-    </div>
-
-  </div>
 
   <script>
     function copyText(button) {
       const box = button.parentElement;
       const text = box.querySelector(".content").innerText;
-
       navigator.clipboard.writeText(text).then(() => {
         button.innerText = "Copié !";
-        setTimeout(() => {
-          button.innerText = "Copier";
-        }, 1500);
+        setTimeout(() => { button.innerText = "Copier"; }, 1500);
       });
     }
   </script>
-
 </body>
 </html>
