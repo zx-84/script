@@ -2,80 +2,33 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Fenêtres</title>
-
+  <title>Fenêtres Outils</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #fff;
-    }
-
-    .container {
-      display: flex;
-      gap: 20px;
-      padding: 20px;
-      flex-wrap: wrap;
-    }
-
-    .box {
-      flex: 1 1 300px;
-      background-color: #111;
-      border: 1px solid #333;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-      position: relative;
-    }
-
-    /* MODIFICATION : Ajout du style pour conserver les sauts de ligne */
-    .content {
-      white-space: pre-wrap;
-      word-break: break-all;
-    }
-
+    body { margin: 0; font-family: Arial, sans-serif; background-color: #000; color: #fff; }
+    .container { display: flex; gap: 20px; padding: 20px; flex-wrap: wrap; }
+    .box { flex: 1 1 300px; background-color: #111; border: 1px solid #333; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1); }
+    .content { white-space: pre-wrap; word-break: break-all; font-family: monospace; font-size: 12px; color: #0f0; background: #000; padding: 10px; border-radius: 5px; }
     h2 { margin-top: 0; }
-
-    button {
-      margin-top: 10px;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 6px;
-      background-color: #333;
-      color: white;
-      cursor: pointer;
-    }
+    button { margin-top: 10px; padding: 8px 12px; border: none; border-radius: 6px; background-color: #333; color: white; cursor: pointer; }
     button:hover { background-color: #555; }
   </style>
 </head>
 
 <body>
   <div class="container">
+    
     <div class="box">
-      <h2>auto-Clicker</h2>
+      <h2>1. Auto-Clicker</h2>
       <p class="content">let autoClicker = null;
-
-// Appuyez sur la touche 'F4' pour démarrer/arrêter
 document.addEventListener('keydown', (e) => {
     if (e.key === 'F4') {
-        if (autoClicker) {
-            clearInterval(autoClicker);
-            autoClicker = null;
-            console.log("STOP");
-        } else {
-            console.log("START");
-            // On capture la position de la souris
+        if (autoClicker) { clearInterval(autoClicker); autoClicker = null; console.log("STOP"); }
+        else { console.log("START");
             let x = 0, y = 0;
             document.addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; }, {once: true});
-
             autoClicker = setInterval(() => {
                 const el = document.elementFromPoint(x, y);
-                if (el) {
-                    el.dispatchEvent(new MouseEvent('mousedown', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
-                    el.dispatchEvent(new MouseEvent('mouseup', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
-                    el.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, clientX: x, clientY: y}));
-                }
+                if (el) { el.click(); }
             }, 1);
         }
     }
@@ -84,42 +37,43 @@ document.addEventListener('keydown', (e) => {
     </div>
 
     <div class="box">
-      <h2>Crack Mdp</h2>
+      <h2>2. Crack Mdp</h2>
       <p class="content">(function() {
     let cla = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','&','é','"','\'','(',')','-','è','_','ç','à',')','=','^','$','*','ù','%','¨','£','!','?',';',',',':','/','.','+','-','*','/','<','>','=','@','#','[',']','{','}','\\','|','`','~','^','€','µ','à','â','ç','é','è','î','ù','û','À','É','å'];
-
     let estEnMarche = true;
     let inputField = document.getElementById("mdpInput");
     let submitBtn = document.getElementById("boutonMDP");
-
-    if (!inputField || !submitBtn) {
-        console.error("IDs introuvables !");
-        return;
-    }
-
-    let saisie = prompt("Quelle longueur de mot de passe tester ? (Annuler = 10)");
-    let tailleUnique = parseInt(saisie) || 10;
-
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') estEnMarche = false; });
-
+    if (!inputField || !submitBtn) return;
+    let tailleUnique = parseInt(prompt("Longueur ?")) || 10;
     let compteurs = new Array(tailleUnique).fill(0);
-    
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') estEnMarche = false; });
     while (estEnMarche) {
-        let testMDP = compteurs.map(i => cla[i]).join('');
-        inputField.value = testMDP;
+        inputField.value = compteurs.map(i => cla[i]).join('');
         submitBtn.click();
-
         let i = 0;
-        while (i < tailleUnique && ++compteurs[i] >= cla.length) {
-            compteurs[i] = 0;
-            i++;
-        }
+        while (i < tailleUnique && ++compteurs[i] >= cla.length) { compteurs[i] = 0; i++; }
         if (i === tailleUnique) break; 
     }
 })();</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
+
+    <div class="box">
+      <h2>3. Nettoyeur Popups</h2>
+      <p class="content">function degagerPopups() {
+    let overlays = document.querySelectorAll('.modal, .popup, #cookie-banner, .overlay');
+    overlays.forEach(o => o.remove());
+    console.log("Interface nettoyée.");
+}
+degagerPopups();</p>
+      <button onclick="copyText(this)">Copier</button>
     </div>
+
+    <div class="box"><h2>4. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>5. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>6. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>7. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
+  </div>
 
   <script>
     function copyText(button) {
