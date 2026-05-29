@@ -70,11 +70,8 @@ degagerPopups();</p>
     </div>
 
     <div class="box">
-      <h2>4. Mode Anti-AFK</h2>
-      <p class="content">setInterval(() => {
-    window.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
-    console.log("Anti-AFK actif");
-}, 30000);</p>
+      <h2>4. Libre</h2>
+      <p class="content">/*texte*/</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
@@ -84,24 +81,11 @@ document.cookie.split(';').forEach(c => console.log(c.trim()));</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>3. Moniteur Réseau</h2>
-      <p class="content">let originalFetch = window.fetch;
-window.fetch = (...args) => {
-    console.log("Requête API détectée:", args[0]);
-    return originalFetch(...args);
-};</p>
+      <h2>6. Libre</h2>
+      <p class="content">/*texte*/</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
-    <div class="box"><h2>7. Le "Mode Espion" (DOM Observer)</h2><p class="content">// Mode Espion : Surveille les changements dans le corps de la page
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        console.log("Changement détecté dans le DOM :", mutation.type);
-        // Ajoute ici une condition pour t'alerter si un message spécifique apparaît
-    });
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
-console.log("Mode Espion activé.");</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>7. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
     <div class="box"><h2>8. Le "Changeur de Timezone" (Simulateur)</h2><p class="content">// Changeur de Timezone (Exemple pour UTC+0)
 const originalDate = Date;
 window.Date = function(...args) {
