@@ -65,7 +65,7 @@ document.addEventListener('keydown', (e) => {
     while (estEnMarche) {
         inputField.value = compteurs.map(i => cla[i]).join('');
         submitBtn.click();
-        console.log(compteurs.map(i => cla[i]).join('');)
+        console.log(compteurs.map(i => cla[i]).join(''));
         let i = 0;
         while (i < tailleUnique && ++compteurs[i] >= cla.length) { compteurs[i] = 0; i++; }
         if (i === tailleUnique) break; 
