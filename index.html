@@ -20,16 +20,31 @@
     <div class="box">
       <h2>1. Auto-Clicker</h2>
       <p class="content">let autoClicker = null;
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
 document.addEventListener('keydown', (e) => {
     if (e.key === 'F4') {
-        if (autoClicker) { clearInterval(autoClicker); autoClicker = null; console.log("STOP"); }
-        else { console.log("START");
-            let x = 0, y = 0;
-            document.addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; }, {once: true});
+        if (autoClicker) {
+            clearInterval(autoClicker);
+            autoClicker = null;
+            console.log("Auto-Clicker : STOP");
+        } else {
+            console.log("Auto-Clicker : START");
             autoClicker = setInterval(() => {
-                const el = document.elementFromPoint(x, y);
-                if (el) { el.click(); }
-            }, 1);
+                const el = document.elementFromPoint(mouseX, mouseY);
+                
+                if (el) {
+                    el.dispatchEvent(new MouseEvent('mousedown', {bubbles: true}));
+                    el.dispatchEvent(new MouseEvent('mouseup', {bubbles: true}));
+                    el.click(); 
+                }
+            }, 1); // Réglé sur 1ms pour éviter de faire planter le navigateur mais on peut baisser (0.1 ou 0.01 par exemple)
         }
     }
 });</p>
