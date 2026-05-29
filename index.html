@@ -76,12 +76,16 @@ document.addEventListener('keydown', (e) => {
 
     <div class="box">
       <h2>3. Nettoyeur Popups</h2>
-      <p class="content">function degagerPopups() {
-    let overlays = document.querySelectorAll('.modal, .popup, #cookie-banner, .overlay');
-    overlays.forEach(o => o.remove());
-    console.log("Interface nettoyée.");
-}
-degagerPopups();</p>
+      <p class="content">let leMenage = () => {
+    console.log("Lancement du protocole : DESTRUCTION DES INTRUS");
+    let cibles = document.querySelectorAll('.ad, .popup, .banner, .modal, #cookie-consent');
+    cibles.forEach(c => {
+        c.style.border = "5px solid red"; // Un petit cadeau visuel avant de mourir
+        setTimeout(() => c.remove(), 500);
+    });
+    console.log("Le site est désormais propre.");
+};
+leMenage();</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
 
