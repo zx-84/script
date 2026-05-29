@@ -97,8 +97,8 @@ console.log("Bienvenue dans la Matrice.");</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>5. Libre</h2>
-      <p class="content">Rien</p>
+      <h2>5. Nettoyage radical</h2>
+      <p class="content">document.querySelectorAll("div:not(:has(*))").forEach(e => e.remove());</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
@@ -118,7 +118,7 @@ cookies.forEach(c => {
 console.log("Total détecté : " + count);</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
-    <div class="box"><h2>7. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>7. Visibilité totale</h2><p class="content">console.table(Array.from(document.querySelectorAll("input[type=hidden]")).map(i => ({name: i.name, value: i.value})));</p><button onclick="copyText(this)">Copier</button></div>
     <div class="box"><h2>8. Changeur de Timezone </h2><p class="content">// Changeur de Timezone (Exemple pour UTC+0)
 const originalDate = Date;
 window.Date = function(...args) {
@@ -133,7 +133,18 @@ console.log("Timezone simulée.");</p><button onclick="copyText(this)">Copier</b
 document.onselectstart = null;
 document.oncopy = null;
 console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>10. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>10. Anti redirection</h2><p class="content">window.onbeforeunload = () => "Non, je reste ici !";</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>11. Traceur de Boutons Furtifs</h2><p class="content">document.querySelectorAll('button, a, [onclick]').forEach(e => e.style.outline = "2px solid lime");</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>12. Recherche Google rapide</h2><p class="content">document.addEventListener('mouseup', () => {
+    let selection = window.getSelection().toString();
+    if (selection.length > 2) {
+        if (confirm("Chercher '" + selection + "' sur Google ?")) {
+            window.open("https://www.google.com/search?q=" + encodeURIComponent(selection));
+        }
+    }
+});</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>11. Traceur de Boutons Furtifs</h2><p class="content">document.querySelectorAll('button, a, [onclick]').forEach(e => e.style.outline = "2px solid lime");</p><button onclick="copyText(this)">Copier</button></div>
+
   </div>
 
   <script>
