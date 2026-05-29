@@ -85,19 +85,32 @@ degagerPopups();</p>
     </div>
 
     <div class="box">
-      <h2>4. Libre</h2>
-      <p class="content">/*texte*/</p>
+      <h2>4. Mode Sombre</h2>
+      <p class="content">document.body.style.filter = "invert(1) hue-rotate(180deg) contrast(1.2)";
+document.body.style.background = "#000";
+console.log("Bienvenue dans la Matrice.");</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>5. Récupérateur Cookies</h2>
-      <p class="content">console.log("--- COOKIES ---");
-document.cookie.split(';').forEach(c => console.log(c.trim()));</p>
+      <h2>5. Libre</h2>
+      <p class="content">Rien</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>6. Libre</h2>
-      <p class="content">/*texte*/</p>
+      <h2>6. Détecteur de cookies</h2>
+      <p class="content">// Analyse silencieuse et propre des cookies
+console.log("--- ANALYSE COOKIES ---");
+let cookies = document.cookie.split(';');
+// On vérifie si la chaîne est vide pour éviter de compter un élément inutile
+let count = (document.cookie.trim() === "") ? 0 : cookies.length;
+
+cookies.forEach(c => {
+    if (c.trim() !== "") {
+        console.log("Trouvé :", c.trim());
+    }
+});
+
+console.log("Total détecté : " + count);</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box"><h2>7. Libre</h2><p class="content">/* Placez votre script */</p><button onclick="copyText(this)">Copier</button></div>
