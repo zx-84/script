@@ -185,6 +185,53 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
     });
     alert("Mode 'Clic-Désintégration' activé. Clique sur n'importe quoi pour le faire disparaître.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>15. Multicolore !</h2><p class="content">(function() {
+    document.addEventListener('mouseover', (e) => {
+        const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+        e.target.style.backgroundColor = randomColor;
+    });
+    alert("Mode 'Peinture' activé. Passe ta souris pour peindre la page !");
+})();</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>16. Mode hacker</h2><p class="content">(function() {
+    let canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0'; canvas.style.left = '0';
+    canvas.style.zIndex = '-1';
+    document.body.appendChild(canvas);
+    let ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    let chars = "01010101".split("");
+    let drops = Array(Math.ceil(canvas.width / 10)).fill(1);
+    
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#0F0";
+        drops.forEach((y, i) => {
+            let text = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(text, i * 10, y * 10);
+            if (y * 10 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+    setInterval(draw, 33);
+})();</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>17. Projecteur</h2><p class="content">(function() {
+    let div = document.createElement('div');
+    div.style.position = 'fixed';
+    div.style.top = '0'; div.style.left = '0';
+    div.style.width = '100%'; div.style.height = '100%';
+    div.style.background = 'black';
+    div.style.pointerEvents = 'none';
+    div.style.zIndex = '9999';
+    document.body.appendChild(div);
+
+    document.addEventListener('mousemove', (e) => {
+        div.style.background = `radial-gradient(circle 150px at ${e.clientX}px ${e.clientY}px, transparent, black)`;
+    });
+    alert("Mode 'Projecteur' activé.");
+})();</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2></h2><p class="content"></p><button onclick="copyText(this)">Copier</button></div>
 
   </div>
 
