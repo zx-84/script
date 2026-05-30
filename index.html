@@ -118,7 +118,16 @@ cookies.forEach(c => {
 console.log("Total détecté : " + count);</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
-    <div class="box"><h2>7. Visibilité totale</h2><p class="content">console.table(Array.from(document.querySelectorAll("input[type=hidden]")).map(i => ({name: i.name, value: i.value})));</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>Autor Admin (On peut tout déplacer dans la page)</h2><p class="content">(function() {
+    // Cherche n'importe quel bouton qui ressemble à 'Suivant', 'Continuer' ou 'Valider'
+    let boutons = Array.from(document.querySelectorAll('button, input[type="button"], .next, .submit'));
+    boutons.forEach(b => {
+        if (b.innerText.toLowerCase().includes('suivant') || b.innerText.toLowerCase().includes('continuer')) {
+            b.click();
+            console.log("Bouton activé : " + b.innerText);
+        }
+    });
+})();</p><button onclick="copyText(this)">Copier</button></div>
     <div class="box"><h2>8. Changeur de Timezone </h2><p class="content">// Changeur de Timezone (Exemple pour UTC+0)
 const originalDate = Date;
 window.Date = function(...args) {
@@ -129,7 +138,7 @@ window.Date = function(...args) {
 };
 Date.prototype = originalDate.prototype;
 console.log("Timezone simulée.");</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>9. Le "Débloqueur de Clic-Droit"</h2><p class="content">document.oncontextmenu = null;
+    <div class="box"><h2>9. Débloqueur de Clic-Droit</h2><p class="content">document.oncontextmenu = null;
 document.onselectstart = null;
 document.oncopy = null;
 console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyText(this)">Copier</button></div>
@@ -143,7 +152,7 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
         }
     }
 });</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>11. Traceur de Boutons Furtifs</h2><p class="content">document.querySelectorAll('button, a, [onclick]').forEach(e => e.style.outline = "2px solid lime");</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>rien</h2><p class="content">rien</p><button onclick="copyText(this)">Copier</button></div>
 
   </div>
 
