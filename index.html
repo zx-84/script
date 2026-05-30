@@ -169,12 +169,21 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
         }
     }
 });</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>Anti lag</h2><p class="content">(function() {
+    <div class="box"><h2>13. Anti lag</h2><p class="content">(function() {
     window.setTimeout = function(callback, delay) {
         console.log("Délai de " + delay + "ms supprimé.");
         return callback(); // Exécute immédiatement au lieu d'attendre
     };
     alert("Mode 'Temps Réel' activé : plus aucune attente forcée.");
+})();</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>14. Disparais en 1 click</h2><p class="content">(function() {
+    document.addEventListener('click', (e) => {
+        e.target.style.transition = "all 1s";
+        e.target.style.opacity = "0";
+        e.target.style.transform = "scale(0)";
+        setTimeout(() => e.target.remove(), 1000);
+    });
+    alert("Mode 'Clic-Désintégration' activé. Clique sur n'importe quoi pour le faire disparaître.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
 
   </div>
