@@ -118,15 +118,32 @@ cookies.forEach(c => {
 console.log("Total détecté : " + count);</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
-    <div class="box"><h2>Autor Admin (On peut tout déplacer dans la page)</h2><p class="content">(function() {
-    // Cherche n'importe quel bouton qui ressemble à 'Suivant', 'Continuer' ou 'Valider'
-    let boutons = Array.from(document.querySelectorAll('button, input[type="button"], .next, .submit'));
-    boutons.forEach(b => {
-        if (b.innerText.toLowerCase().includes('suivant') || b.innerText.toLowerCase().includes('continuer')) {
-            b.click();
-            console.log("Bouton activé : " + b.innerText);
+    <div class="box"><h2>7. Autor Admin</h2><p class="content">(function() {
+    console.log("--- Mode Édition Totale Activé (Sans auto-clic) ---");
+
+    // 1. Débloque toute l'édition sur la page
+    document.body.contentEditable = "true";
+    document.designMode = "on";
+
+    // 2. Nettoie les champs de saisie (inputs, textareas, selects)
+    let inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(i => {
+        i.removeAttribute('readonly');
+        i.removeAttribute('disabled');
+        
+        // Clonage pour tuer les écouteurs d'événements cachés
+        let clone = i.cloneNode(true);
+        if (i.parentNode) {
+            i.parentNode.replaceChild(clone, i);
         }
+        // Bordure rouge pour identifier facilement les zones débloquées
+        clone.style.border = "3px solid #ff0000";
     });
+
+    // 3. Bloque les interférences clavier pour que rien ne t'empêche d'écrire
+    window.addEventListener('keydown', e => e.stopPropagation(), true);
+
+    alert("Interface débloquée : tu as maintenant le contrôle total sans automatisation de clics.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
     <div class="box"><h2>8. Changeur de Timezone </h2><p class="content">// Changeur de Timezone (Exemple pour UTC+0)
 const originalDate = Date;
