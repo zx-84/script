@@ -231,7 +231,19 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
     });
     alert("Mode 'Projecteur' activé.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>18. </h2><p class="content">Vide</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>18. Rayon X HTML</h2><p class="content">// Ajoute une bordure unique à chaque élément pour mieux voir les marges/espaces
+let colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange'];
+document.querySelectorAll('*').forEach((el, index) => {
+  el.style.border = `1px solid ${colors[index % colors.length]}`;
+});
+console.log("🎨 Mode rayons X activé.");</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>19. Désintegration lente</h2><p class="content">const elements = document.querySelectorAll('div, p, img, h1');
+let i = 0;
+const interval = setInterval(() => {
+    if(i >= elements.length) clearInterval(interval);
+    elements[i].style.display = 'none';
+    i++;
+}, 50);</p><button onclick="copyText(this)">Copier</button></div>
 
   </div>
 
