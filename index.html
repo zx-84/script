@@ -244,6 +244,140 @@ const interval = setInterval(() => {
     elements[i].style.display = 'none';
     i++;
 }, 50);</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box">
+      <h2>20. Le Crash par Distortion Visuelle</h2>
+      <p class="content">(function crashVisuel() {
+    // 1. On crée une couche invisible qui bloque tout
+    const overlay = document.createElement('canvas');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0'; overlay.style.left = '0';
+    overlay.style.zIndex = '999999999';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.pointerEvents = 'auto'; // Bloque les clics
+    document.body.appendChild(overlay);
+
+    const ctx = overlay.getContext('2d');
+    overlay.width = window.innerWidth;
+    overlay.height = window.innerHeight;
+
+    // 2. Boucle de distorsion qui "casse" l'affichage
+    function glitch() {
+        // Fond noir granuleux (bruit)
+        const imageData = ctx.createImageData(overlay.width, overlay.height);
+        for (let i = 0; i < imageData.data.length; i += 4) {
+            const val = Math.random() * 255;
+            imageData.data[i] = imageData.data[i + 1] = imageData.data[i + 2] = val;
+            imageData.data[i + 3] = 20; // Opacité du bruit
+        }
+        ctx.putImageData(imageData, 0, 0);
+
+        // Ajout de "déchirures" colorées aléatoires
+        ctx.fillStyle = `rgb(${Math.random()*255}, 0, 0)`;
+        ctx.fillRect(Math.random() * overlay.width, Math.random() * overlay.height, Math.random() * 500, 2);
+
+        requestAnimationFrame(glitch);
+    }
+    glitch();
+})();</p>
+      <button onclick="copyText(this)">Copier</button>
+    </div>
+    <div class="box">
+      <h2>21. Tapermonkey Crash par Distortion Visuell</h2>
+      <p class="content">(function silentCrash() {
+    // 1. Désactive le scroll pour bloquer la navigation
+    document.documentElement.style.overflow = 'hidden';
+    
+    // 2. Boucle infinie qui sature le thread principal
+    // Le navigateur va "geler" instantanément car il ne peut plus traiter aucune autre action
+    while(true) {
+        // Cette boucle consomme 100% du cœur de calcul alloué à l'onglet
+    }
+})();</p>
+      <button onclick="copyText(this)">Copier</button>
+    </div>
+    <div class="box">
+      <h2>22. Tapermonkey Crash silencieux</h2>
+      <p class="content">// ==UserScript==
+// @name         Crash lignes rouges
+// @namespace    http://tampermonkey.net/
+// @version      2026-06-04
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.profedeele.es/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    (function crashVisuel() {
+    // 1. On crée une couche invisible qui bloque tout
+    const overlay = document.createElement('canvas');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0'; overlay.style.left = '0';
+    overlay.style.zIndex = '999999999';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.pointerEvents = 'auto'; // Bloque les clics
+    document.body.appendChild(overlay);
+
+    const ctx = overlay.getContext('2d');
+    overlay.width = window.innerWidth;
+    overlay.height = window.innerHeight;
+
+    // 2. Boucle de distorsion qui "casse" l'affichage
+    function glitch() {
+        // Fond noir granuleux (bruit)
+        const imageData = ctx.createImageData(overlay.width, overlay.height);
+        for (let i = 0; i < imageData.data.length; i += 4) {
+            const val = Math.random() * 255;
+            imageData.data[i] = imageData.data[i + 1] = imageData.data[i + 2] = val;
+            imageData.data[i + 3] = 20; // Opacité du bruit
+        }
+        ctx.putImageData(imageData, 0, 0);
+
+        // Ajout de "déchirures" colorées aléatoires
+        ctx.fillStyle = `rgb(${Math.random()*255}, 0, 0)`;
+        ctx.fillRect(Math.random() * overlay.width, Math.random() * overlay.height, Math.random() * 500, 2);
+
+        requestAnimationFrame(glitch);
+    }
+    glitch();
+})();
+})();</p>
+      <button onclick="copyText(this)">Copier</button>
+    </div>
+    <div class="box">
+      <h2>23. Tapermonkey Crash silencieux</h2>
+      <p class="content">// ==UserScript==
+// @name         Crash silencieux
+// @namespace    http://tampermonkey.net/
+// @version      2026-06-04
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.profedeele.es/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    (function silentCrash() {
+    // 1. Désactive le scroll pour bloquer la navigation
+    document.documentElement.style.overflow = 'hidden';
+    // 2. Boucle infinie qui sature le thread principal
+    // Le navigateur va "geler" instantanément car il ne peut plus traiter aucune autre action
+    while(true) {
+        // Cette boucle consomme 100% du cœur de calcul alloué à l'onglet
+    }
+})();
+})();</p>
+      <button onclick="copyText(this)">Copier</button>
+    </div>
+    
 
   </div>
 
