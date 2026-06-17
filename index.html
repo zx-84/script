@@ -19,35 +19,67 @@
     
     <div class="box">
       <h2>1. Auto-Clicker</h2>
-      <p class="content">let autoClicker = null;
-let mouseX = 0;
-let mouseY = 0;
+      <p class="content">
+    let autoClicker = null;
+    let mouseX = 0;
+    let mouseY = 0;
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'F4') {
-        if (autoClicker) {
-            clearInterval(autoClicker);
-            autoClicker = null;
-            console.log("Auto-Clicker : STOP");
-        } else {
-            console.log("Auto-Clicker : START");
-            autoClicker = setInterval(() => {
-                const el = document.elementFromPoint(mouseX, mouseY);
-                
-                if (el) {
-                    el.dispatchEvent(new MouseEvent('mousedown', {bubbles: true}));
-                    el.dispatchEvent(new MouseEvent('mouseup', {bubbles: true}));
-                    el.click(); 
-                }
-            }, 1); // Réglé sur 1ms pour éviter de faire planter le navigateur mais on peut baisser (0.1 ou 0.01 par exemple)
-        }
+    // --- Fonction bip ---
+    function playBeep() {
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        osc.frequency.value = 600;
+        osc.connect(ctx.destination);
+        osc.start();
+        setTimeout(() => osc.stop(), 120);
     }
-});</p>
+
+    // --- Flash couleur ---
+    function flash(color) {
+        const flash = document.createElement("div");
+        flash.style.position = "fixed";
+        flash.style.top = 0;
+        flash.style.left = 0;
+        flash.style.width = "100%";
+        flash.style.height = "100%";
+        flash.style.background = color;
+        flash.style.zIndex = 999999;
+        flash.style.pointerEvents = "none";
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 150);
+    }
+
+    // --- Suivi souris ---
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // --- Activation F4 ---
+    document.addEventListener('keydown', (e) => {
+
+        if (e.key === 'F4') {
+            if (autoClicker) {
+                clearInterval(autoClicker);
+                autoClicker = null;
+                console.log("Auto-Clicker : STOP");
+                playBeep();
+                flash("rgba(255,0,0,0.25)"); // 🔴 rouge
+            } else {
+                console.log("Auto-Clicker : START");
+                playBeep();
+                flash("rgba(0,255,0,0.25)"); // 🟢 vert
+                autoClicker = setInterval(() => {
+                    const el = document.elementFromPoint(mouseX, mouseY);
+                    if (el) {
+                        el.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+                        el.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+                        el.click();
+                    }
+                }, 1);
+            }
+        }
+    });</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
 
