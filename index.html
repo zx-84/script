@@ -82,9 +82,155 @@
     });</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
+    <div class="box"><h2>2. Autoclick pointeur</h2><p class="content">// Nettoyage si déjà lancé
+if (window.__autoClickHandle__) {
+  window.__autoClickInterval__ && clearInterval(window.__autoClickInterval__);
+  window.__autoClickHandle__.remove();
+  window.__autoClickStatus__.remove();
+}
+
+(function () {
+  // --- Création du bouton rond ---
+  const handle = document.createElement("div");
+  window.__autoClickHandle__ = handle;
+
+  Object.assign(handle.style, {
+    position: "fixed",
+    width: "40px",   // plus petit
+    height: "40px",  // plus petit
+    borderRadius: "50%",
+    background: "rgba(46,204,113,0.4)",
+    color: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "22px", // adapté au petit rond
+    cursor: "grab",
+    zIndex: 999999,
+    userSelect: "none",
+    transition: "transform 0.08s ease, background 0.08s ease"
+  });
+  handle.textContent = "✕";
+  document.body.appendChild(handle);
+
+  // --- Statut ---
+  const status = document.createElement("div");
+  window.__autoClickStatus__ = status;
+
+  Object.assign(status.style, {
+    position: "fixed",
+    bottom: "10px",
+    left: "10px",
+    padding: "6px 10px",
+    background: "rgba(0,0,0,0.7)",
+    color: "#fff",
+    fontSize: "12px",
+    borderRadius: "4px",
+    zIndex: 999999
+  });
+  status.textContent = "Autoclick: OFF (F2 pour ON/OFF)";
+  document.body.appendChild(status);
+
+  // --- Variables ---
+  let dragging = false;
+  let offsetX = 0, offsetY = 0;
+  let autoClickOn = false;
+  let autoClickInterval = null;
+  window.__autoClickInterval__ = autoClickInterval;
+
+  // --- Position initiale ---
+  function centerHandle() {
+    handle.style.left = (window.innerWidth / 2 - 20) + "px";
+    handle.style.top  = (window.innerHeight / 2 - 20) + "px";
+  }
+  centerHandle();
+
+  // --- Drag souris ---
+  handle.addEventListener("mousedown", e => {
+    dragging = true;
+    offsetX = e.clientX - handle.offsetLeft;
+    offsetY = e.clientY - handle.offsetTop;
+    handle.style.cursor = "grabbing";
+  });
+
+  document.addEventListener("mousemove", e => {
+    if (!dragging) return;
+    handle.style.left = (e.clientX - offsetX) + "px";
+    handle.style.top  = (e.clientY - offsetY) + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    dragging = false;
+    handle.style.cursor = "grab";
+  });
+
+  // --- Animation de clic ---
+  function animateClick() {
+    handle.style.transform = "scale(0.8)";
+    handle.style.background = "rgba(46,204,113,0.8)";
+    setTimeout(() => {
+      handle.style.transform = "scale(1)";
+      handle.style.background = "rgba(46,204,113,0.4)";
+    }, 80);
+  }
+
+  // --- Fonction de clic automatique ---
+  function performAutoClick() {
+    if (!autoClickOn) return;
+
+    const rect = handle.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    // On cache le rond pour ne pas bloquer elementFromPoint
+    const prevDisplay = handle.style.display;
+    handle.style.display = "none";
+    const target = document.elementFromPoint(x, y);
+    handle.style.display = prevDisplay;
+
+    if (!target) return;
+
+    const opts = {
+      bubbles: true,
+      cancelable: true,
+      clientX: x,
+      clientY: y
+    };
+
+    target.dispatchEvent(new MouseEvent("mousedown", opts));
+    target.dispatchEvent(new MouseEvent("mouseup", opts));
+    target.dispatchEvent(new MouseEvent("click", opts));
+
+    animateClick();
+  }
+
+  // --- Toggle F2 ---
+  document.addEventListener("keydown", e => {
+    if (e.key === "F2") {
+      autoClickOn = !autoClickOn;
+
+      if (autoClickOn) {
+        status.textContent = "Autoclick: ON (F2 pour OFF)";
+        status.style.background = "rgba(46,204,113,0.8)";
+        autoClickInterval && clearInterval(autoClickInterval);
+        autoClickInterval = setInterval(performAutoClick, 1);
+        window.__autoClickInterval__ = autoClickInterval;
+      } else {
+        status.textContent = "Autoclick: OFF (F2 pour ON)";
+        status.style.background = "rgba(0,0,0,0.7)";
+        autoClickInterval && clearInterval(autoClickInterval);
+        autoClickInterval = null;
+        window.__autoClickInterval__ = null;
+      }
+    }
+  });
+
+  window.addEventListener("resize", centerHandle);
+})();
+</p><button onclick="copyText(this)">Copier</button></div>
 
     <div class="box">
-      <h2>2. Crack Mdp</h2>
+      <h2>3. Crack Mdp</h2>
       <p class="content">(function() {
     let cla = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','&','é','"','\'','(',')','-','è','_','ç','à',')','=','^','$','*','ù','%','¨','£','!','?',';',',',':','/','.','+','-','*','/','<','>','=','@','#','[',']','{','}','\\','|','`','~','^','€','µ','à','â','ç','é','è','î','ù','û','À','É','å'];
     let estEnMarche = true;
@@ -107,7 +253,7 @@
     </div>
 
     <div class="box">
-      <h2>3. Nettoyeur Popups</h2>
+      <h2>4. Nettoyeur Popups</h2>
       <p class="content">let leMenage = () => {
     console.log("Lancement du protocole : DESTRUCTION DES INTRUS");
     let cibles = document.querySelectorAll('.ad, .popup, .banner, .modal, #cookie-consent');
@@ -122,19 +268,19 @@ leMenage();</p>
     </div>
 
     <div class="box">
-      <h2>4. Mode Sombre</h2>
+      <h2>5. Mode Sombre</h2>
       <p class="content">document.body.style.filter = "invert(1) hue-rotate(180deg) contrast(1.2)";
 document.body.style.background = "#000";
 console.log("Bienvenue dans la Matrice.");</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>5. Nettoyage radical</h2>
+      <h2>6. Nettoyage radical</h2>
       <p class="content">document.querySelectorAll("div:not(:has(*))").forEach(e => e.remove());</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>6. Détecteur de cookies</h2>
+      <h2>7. Détecteur de cookies</h2>
       <p class="content">// Analyse silencieuse et propre des cookies
 console.log("--- ANALYSE COOKIES ---");
 let cookies = document.cookie.split(';');
@@ -150,7 +296,7 @@ cookies.forEach(c => {
 console.log("Total détecté : " + count);</p>
       <button onclick="copyText(this)">Copier</button>
     </div>
-    <div class="box"><h2>7. Autor Admin</h2><p class="content">(function() {
+    <div class="box"><h2>8. Autor Admin</h2><p class="content">(function() {
     console.log("--- Mode Édition Totale Activé (Sans auto-clic) ---");
 
     // 1. Débloque toute l'édition sur la page
@@ -177,7 +323,7 @@ console.log("Total détecté : " + count);</p>
 
     alert("Interface débloquée : tu as maintenant le contrôle total sans automatisation de clics.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>8. Changeur de Timezone </h2><p class="content">// Changeur de Timezone (Exemple pour UTC+0)
+    <div class="box"><h2>9. Changeur de Timezone </h2><p class="content">// Changeur de Timezone (Exemple pour UTC+0)
 const originalDate = Date;
 window.Date = function(...args) {
     if (args.length === 0) {
@@ -187,13 +333,13 @@ window.Date = function(...args) {
 };
 Date.prototype = originalDate.prototype;
 console.log("Timezone simulée.");</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>9. Débloqueur de Clic-Droit</h2><p class="content">document.oncontextmenu = null;
+    <div class="box"><h2>10. Débloqueur de Clic-Droit</h2><p class="content">document.oncontextmenu = null;
 document.onselectstart = null;
 document.oncopy = null;
 console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>10. Anti redirection</h2><p class="content">window.onbeforeunload = () => "Non, je reste ici !";</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>11. Traceur de Boutons Furtifs</h2><p class="content">document.querySelectorAll('button, a, [onclick]').forEach(e => e.style.outline = "2px solid lime");</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>12. Recherche Google rapide</h2><p class="content">document.addEventListener('mouseup', () => {
+    <div class="box"><h2>11. Anti redirection</h2><p class="content">window.onbeforeunload = () => "Non, je reste ici !";</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>12. Traceur de Boutons Furtifs</h2><p class="content">document.querySelectorAll('button, a, [onclick]').forEach(e => e.style.outline = "2px solid lime");</p><button onclick="copyText(this)">Copier</button></div>
+    <div class="box"><h2>13. Recherche Google rapide</h2><p class="content">document.addEventListener('mouseup', () => {
     let selection = window.getSelection().toString();
     if (selection.length > 2) {
         if (confirm("Chercher '" + selection + "' sur Google ?")) {
@@ -201,14 +347,14 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
         }
     }
 });</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>13. Anti lag</h2><p class="content">(function() {
+    <div class="box"><h2>14. Anti lag</h2><p class="content">(function() {
     window.setTimeout = function(callback, delay) {
         console.log("Délai de " + delay + "ms supprimé.");
         return callback(); // Exécute immédiatement au lieu d'attendre
     };
     alert("Mode 'Temps Réel' activé : plus aucune attente forcée.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>14. Disparais en 1 click</h2><p class="content">(function() {
+    <div class="box"><h2>15. Disparais en 1 click</h2><p class="content">(function() {
     document.addEventListener('click', (e) => {
         e.target.style.transition = "all 1s";
         e.target.style.opacity = "0";
@@ -217,14 +363,14 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
     });
     alert("Mode 'Clic-Désintégration' activé. Clique sur n'importe quoi pour le faire disparaître.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>15. Multicolore !</h2><p class="content">(function() {
+    <div class="box"><h2>16. Multicolore !</h2><p class="content">(function() {
     document.addEventListener('mouseover', (e) => {
         const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
         e.target.style.backgroundColor = randomColor;
     });
     alert("Mode 'Peinture' activé. Passe ta souris pour peindre la page !");
 })();</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>16. Mode hacker</h2><p class="content">(function() {
+    <div class="box"><h2>17. Mode hacker</h2><p class="content">(function() {
     let canvas = document.createElement('canvas');
     canvas.style.position = 'fixed';
     canvas.style.top = '0'; canvas.style.left = '0';
@@ -248,7 +394,7 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
     }
     setInterval(draw, 33);
 })();</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>17. Projecteur</h2><p class="content">(function() {
+    <div class="box"><h2>18. Projecteur</h2><p class="content">(function() {
     let div = document.createElement('div');
     div.style.position = 'fixed';
     div.style.top = '0'; div.style.left = '0';
@@ -263,7 +409,7 @@ console.log("Clic-droit et sélection réactivés.");</p><button onclick="copyTe
     });
     alert("Mode 'Projecteur' activé.");
 })();</p><button onclick="copyText(this)">Copier</button></div>
-    <div class="box"><h2>18. Rayon X HTML</h2><p class="content">// Ajoute une bordure unique à chaque élément pour mieux voir les marges/espaces
+    <div class="box"><h2>19. Rayon X HTML</h2><p class="content">// Ajoute une bordure unique à chaque élément pour mieux voir les marges/espaces
 let colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange'];
 document.querySelectorAll('*').forEach((el, index) => {
   el.style.border = `1px solid ${colors[index % colors.length]}`;
@@ -277,7 +423,7 @@ const interval = setInterval(() => {
     i++;
 }, 50);</p><button onclick="copyText(this)">Copier</button></div>
     <div class="box">
-      <h2>20. Le Crash par Distortion Visuelle</h2>
+      <h2>21. Le Crash par Distortion Visuelle</h2>
       <p class="content">(function crashVisuel() {
     // 1. On crée une couche invisible qui bloque tout
     const overlay = document.createElement('canvas');
@@ -315,7 +461,7 @@ const interval = setInterval(() => {
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>21. Tapermonkey Crash par Distortion Visuelle</h2>
+      <h2>22. Tapermonkey Crash par Distortion Visuelle</h2>
       <p class="content">(function silentCrash() {
     // 1. Désactive le scroll pour bloquer la navigation
     document.documentElement.style.overflow = 'hidden';
@@ -329,7 +475,7 @@ const interval = setInterval(() => {
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>22. Tapermonkey Crash par Distortion Visuelle (sur Profeedele.es)</h2>
+      <h2>23. Tapermonkey Crash par Distortion Visuelle (sur Profeedele.es)</h2>
       <p class="content">// ==UserScript==
 // @name         Crash lignes rouges
 // @namespace    http://tampermonkey.net/
@@ -382,7 +528,7 @@ const interval = setInterval(() => {
       <button onclick="copyText(this)">Copier</button>
     </div>
     <div class="box">
-      <h2>23. Tapermonkey Crash silencieux (sur Profeedele.es)</h2>
+      <h2>24. Tapermonkey Crash silencieux (sur Profeedele.es)</h2>
       <p class="content">// ==UserScript==
 // @name         Crash silencieux
 // @namespace    http://tampermonkey.net/
